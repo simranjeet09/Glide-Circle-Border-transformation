@@ -13,4 +13,4 @@ Usage:-
                             
 License
 Please review below licence from the owner of GLide
-https://github.com/bumptech/glide/blob/master/LICENSE
+https://github.com/bumptech/glide/blob/master/LICENSE 
