@@ -1,0 +1,56 @@
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Shader;
+
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+/**
+ * Created by Simar on 02-05-2018.
+ */
+public class CircularTransformWhite extends BitmapTransformation {
+    public CircularTransformWhite(Context context) {
+        super(context);
+    }
+
+    @Override protected Bitmap transform(BitmapPool pool, Bitmap bitmap, int outWidth, int outHeight) {
+        return circleCrop(pool, bitmap);
+    }
+
+    private static Bitmap circleCrop(BitmapPool pool, Bitmap bitmap) {
+        if (bitmap == null) return null;
+        final int borderWidth=6;
+
+        final int width = bitmap.getWidth() + borderWidth;
+        final int height = bitmap.getHeight() + borderWidth;
+
+        Bitmap canvasBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(shader);
+
+
+        Canvas canvas = new Canvas(canvasBitmap);
+        float radius = width > height ? ((float) height) / 2f : ((float) width) / 2f;
+        canvas.drawCircle(width / 2, height / 2, radius, paint);
+        paint.setShader(null);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.WHITE);
+        paint.setStrokeWidth(borderWidth);
+        canvas.drawCircle(width / 2, height / 2, radius - borderWidth / 2, paint);
+        if (canvasBitmap != bitmap) {
+            bitmap.recycle();
+        }
+
+        return canvasBitmap;
+
+    }
+
+    @Override public String getId() {
+        return getClass().getName();
+    }
+}
