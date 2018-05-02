@@ -10,4 +10,7 @@ Usage:-
                             .override(IMAGE_WIDTH, IMAGE_HEIGHT)
                             .transform(new CircularTransformWhite(CONTEXT)
                             .into(IMAGE_VIEW);
-                            
+                            
+License
+Please review below licence from the owner of GLide
+https://github.com/bumptech/glide/blob/master/LICENSE
